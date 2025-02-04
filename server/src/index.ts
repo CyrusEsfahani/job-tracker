@@ -6,6 +6,7 @@ import authRoutes from './routes/auth';
 import jobRoutes from './routes/jobs';
 import jobBoardRoutes from './routes/jobBoard';
 import errorHandler from './middleware/error';
+import admin from './utils/firebase';
 
 dotenv.config();
 
@@ -25,6 +26,19 @@ mongoose.connect(process.env.MONGODB_URI!)
 app.use('/api/auth', authRoutes);
 app.use('/api/jobs', jobRoutes);
 app.use('/api/job-board', jobBoardRoutes);
+app.use(async (req, res, next) => {
+    const authHeader = req.headers.authorization;
+    if (authHeader?.startsWith('Bearer ')) {
+      const token = authHeader.split(' ')[1];
+      try {
+        const decodedToken = await admin.auth().verifyIdToken(token);
+        req.user = decodedToken;
+      } catch (error) {
+        console.error('Token verification failed:', error);
+      }
+    }
+    next();
+  });
 
 // Error Handling
 app.use(errorHandler);

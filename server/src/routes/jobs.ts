@@ -1,19 +1,12 @@
-import { Router } from 'express';
-import {
-  createJob,
-  getJobs,
-  updateJob,
-  deleteJob
-} from '../controllers/jobs';
-import authMiddleware from '../middleware/auth';
+import express from 'express';
+import { verifyToken } from '../middleware/firebaseAuth';
+import { getJobs, createJob } from '../controllers/jobsController';
 
-const router = Router();
+const router = express.Router();
 
-router.use(authMiddleware);
+router.use(verifyToken); // Protect all job routes
 
-router.post('/', createJob);
 router.get('/', getJobs);
-router.put('/:id', updateJob);
-router.delete('/:id', deleteJob);
+router.post('/', createJob);
 
 export default router;
