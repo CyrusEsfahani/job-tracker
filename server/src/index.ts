@@ -18,14 +18,20 @@ app.use(cors());
 app.use(express.json());
 
 // Database Connection
-mongoose.connect(process.env.MONGODB_URI!)
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error(err));
+const MONGO_URI = process.env.MONGODB_URI || '';
 
+if (!MONGO_URI) {
+  console.error('❌ MONGO_URI is missing. Please add it to your .env file.');
+  process.exit(1);
+}
+
+mongoose.connect(MONGO_URI)
+  .then(() => console.log('✅ MongoDB connected'))
+  .catch(err => console.error('❌ MongoDB connection error:', err));
 // Routes
-app.use('/api/auth', authRoutes);
+// app.use('/api/auth', authRoutes);
 app.use('/api/jobs', jobRoutes);
-app.use('/api/job-board', jobBoardRoutes);
+// app.use('/api/job-board', jobBoardRoutes);
 app.use(async (req, res, next) => {
     const authHeader = req.headers.authorization;
     if (authHeader?.startsWith('Bearer ')) {
@@ -41,7 +47,7 @@ app.use(async (req, res, next) => {
   });
 
 // Error Handling
-app.use(errorHandler);
+// app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
