@@ -1,6 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
 import admin from 'firebase-admin';
 
+declare global {
+    namespace Express {
+      interface Request {
+        user?: admin.auth.DecodedIdToken;
+      }
+    }
+  }
+  
+
 export const authMiddleware = async (
   req: Request,
   res: Response,
@@ -16,11 +25,9 @@ export const authMiddleware = async (
     const token = authHeader.split(' ')[1];
     const decodedToken = await admin.auth().verifyIdToken(token);
     
-    req.user = {
-      id: decodedToken.uid,
-      email: decodedToken.email
-    };
+    req.user = decodedToken;
 
+    
     next();
   } catch (error) {
     res.status(401).json({ error: 'Invalid token' });

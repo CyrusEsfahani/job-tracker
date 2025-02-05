@@ -1,5 +1,5 @@
 import { signInWithPopup, GoogleAuthProvider, GithubAuthProvider } from 'firebase/auth';
-import { auth } from '../../../firebase/config';
+import { auth } from '../../firebase/config';
 import { FcGoogle } from 'react-icons/fc';
 import { AiFillGithub } from 'react-icons/ai';
 

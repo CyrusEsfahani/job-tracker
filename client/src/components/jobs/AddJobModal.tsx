@@ -10,8 +10,12 @@ type FormValues = {
   deadline: string
   notes?: string
 }
-
-export default function AddJobModal({ isOpen, closeModal }) {
+interface AddJobModalProps {
+    isOpen: boolean;
+    closeModal: () => void;
+  }
+  export default function AddJobModal({ isOpen, closeModal }: AddJobModalProps) {
+  
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FormValues>()
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {

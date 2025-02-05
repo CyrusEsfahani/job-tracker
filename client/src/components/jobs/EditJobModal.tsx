@@ -2,10 +2,17 @@ import { Dialog } from '@headlessui/react'
 import { motion } from 'framer-motion'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import type { Job } from '../../types'
+import type { Job } from '../../types/types'
 
-export default function EditJobModal({ isOpen, closeModal, job }) {
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<Job>({
+interface EditJobModalProps {
+    isOpen: boolean;
+    closeModal: () => void;
+    job: Job;
+  }
+  
+
+  export default function EditJobModal({ isOpen, closeModal, job }: EditJobModalProps) {
+ const { register, handleSubmit, formState: { errors }, reset } = useForm<Job>({
     defaultValues: job
   })
 

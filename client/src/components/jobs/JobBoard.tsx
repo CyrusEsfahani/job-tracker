@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import AddJobModal from '../components/jobs/AddJobModal'
-import JobFilters from '../components/jobs/JobFilters'
-import JobBoard from '../components/jobs/JobBoard'
+import AddJobModal from './AddJobModal'
+import JobFilters from './JobsFilter'
 import { PlusIcon } from '@heroicons/react/24/solid'
+import type { Job, DropResult } from '../../types/types';
+
 
 interface JobBoardProps {
     jobs: Job[];
@@ -12,6 +13,17 @@ interface JobBoardProps {
   export default function JobBoard({ jobs, onDragEnd }: JobBoardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
+
+   // ✅ Defined filteredJobs
+   const filteredJobs = jobs.filter(job => 
+    job.company.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  // ✅ Defined handleDragEnd function
+  const handleDragEnd = (result: DropResult) => {
+    console.log("Dragged:", result);
+  };
+
 
   return (
     <div className="p-6">
@@ -32,7 +44,8 @@ interface JobBoardProps {
           setSearchQuery={setSearchQuery}
         />
 
-        <JobBoard jobs={filteredJobs} />
+        <JobBoard jobs={filteredJobs} onDragEnd={() => {}} />
+
 
         <AddJobModal 
           isOpen={isModalOpen}

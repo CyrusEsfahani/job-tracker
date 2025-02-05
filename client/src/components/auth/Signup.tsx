@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../../firebase/config';
+import { auth } from '../../firebase/config';
 import { Link } from 'react-router-dom';
 
 export default function Signup() {
@@ -13,11 +13,14 @@ export default function Signup() {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       // Redirect to dashboard
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
+    } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("An unknown error occurred.");
+        }
+      }
+    };
   return (
     <div className="max-w-md mx-auto mt-20 p-6 bg-white rounded-lg shadow">
       <h2 className="text-2xl font-bold mb-6">Sign Up</h2>

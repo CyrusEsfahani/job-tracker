@@ -1,7 +1,12 @@
-import { motion } from 'framer-motion'
-import { BriefcaseIcon, CalendarIcon } from '@heroicons/react/24/outline'
+import { motion } from 'framer-motion';
+import { BriefcaseIcon, CalendarIcon } from '@heroicons/react/24/outline';
+import { Job } from '../../types/types';
 
-export default function JobCard({ job }) {
+interface JobCardProps {
+  job: Job;
+}
+
+export default function JobCard({ job }: JobCardProps) {
   return (
     <motion.div
       className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 mb-3"
@@ -21,5 +26,5 @@ export default function JobCard({ job }) {
         <span>{new Date(job.deadline).toLocaleDateString()}</span>
       </div>
     </motion.div>
-  )
+  );
 }

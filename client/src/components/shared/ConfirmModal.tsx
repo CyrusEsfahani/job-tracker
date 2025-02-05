@@ -1,13 +1,16 @@
 import { Dialog } from '@headlessui/react'
 import { motion } from 'framer-motion'
 
-export default function ConfirmModal({
-  isOpen,
-  closeModal,
-  title,
-  message,
-  onConfirm
-}) {
+interface ConfirmModalProps {
+    isOpen: boolean;
+    closeModal: () => void;
+    title: string;
+    message: string;
+    onConfirm: () => void;
+  }
+  
+  export default function ConfirmModal({ isOpen, closeModal, title, message, onConfirm }: ConfirmModalProps) {
+  
   return (
     <Dialog open={isOpen} onClose={closeModal} className="relative z-50">
       <div className="fixed inset-0 bg-black/30" aria-hidden="true" />

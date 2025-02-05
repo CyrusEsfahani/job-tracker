@@ -2,10 +2,10 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import authRoutes from './routes/auth';
+// import authRoutes from './routes/auth';
 import jobRoutes from './routes/jobs';
-import jobBoardRoutes from './routes/jobBoard';
-import errorHandler from './middleware/error';
+// import jobBoardRoutes from './routes/jobBoard';
+// import errorHandler from './middleware/error';
 import admin from './utils/firebase';
 
 dotenv.config();

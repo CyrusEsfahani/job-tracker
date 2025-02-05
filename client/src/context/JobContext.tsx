@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from 'react'
-import type { Job } from '../types'
+import type { Job } from '../types/types'
+import { ReactNode } from 'react'
 
 type JobsContextType = {
   jobs: Job[]
@@ -14,8 +15,11 @@ const JobsContext = createContext<JobsContextType>({
   updateJob: () => {},
   deleteJob: () => {},
 })
-
-export const JobsProvider = ({ children }) => {
+interface JobsProviderProps {
+    children: ReactNode;
+  }
+  
+  export const JobsProvider = ({ children }: JobsProviderProps) => {
   const [jobs, setJobs] = useState<Job[]>([])
 
   const addJob = (job: Job) => {

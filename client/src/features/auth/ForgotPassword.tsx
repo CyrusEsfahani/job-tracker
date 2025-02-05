@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { sendPasswordResetEmail } from 'firebase/auth';
-import { auth } from '../../../firebase/config';
+import { auth } from '../../firebase/config';
 import { Link } from 'react-router-dom';
 
 export default function ForgotPassword() {
@@ -13,10 +13,15 @@ export default function ForgotPassword() {
     try {
       await sendPasswordResetEmail(auth, email);
       setMessage('Password reset email sent!');
-    } catch (err) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message); // ✅ Now TypeScript knows 'err' has a 'message' property
+      } else {
+        setError('An unexpected error occurred'); // ✅ Handles cases where 'err' is not an Error object
+      }
     }
   };
+  
 
   return (
     <div className="max-w-md mx-auto mt-20 p-6 bg-white rounded-lg shadow">

@@ -1,6 +1,12 @@
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 
-export default function JobFilters({ searchQuery, setSearchQuery }) {
+
+interface JobFiltersProps {
+    searchQuery: string;
+    setSearchQuery: (query: string) => void;
+  }
+  
+  export default function JobFilters({ searchQuery, setSearchQuery }: JobFiltersProps) {
   return (
     <div className="mb-6 flex items-center justify-between">
       <div className="relative flex-1 max-w-md">
