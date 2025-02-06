@@ -1,3 +1,14 @@
+import 'dotenv/config';
+
+// Verify env loading
+console.log('ENV CHECK:', {
+  projectId: process.env.FIREBASE_PROJECT_ID?.slice(0, 6),
+  clientEmail: process.env.FIREBASE_CLIENT_EMAIL?.slice(0, 6),
+  privateKey: process.env.FIREBASE_PRIVATE_KEY?.slice(0, 20)
+});
+
+
+
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
@@ -8,7 +19,16 @@ import jobRoutes from './routes/jobs';
 // import errorHandler from './middleware/error';
 import admin from './utils/firebase';
 
-dotenv.config();
+const envResult = dotenv.config();
+if (envResult.error) {
+  console.error('❌ .env ERROR:', envResult.error);
+  process.exit(1);
+}
+
+// Verify Firebase variables exist
+console.log('✅ Loaded FIREBASE_PROJECT_ID:', !!process.env.FIREBASE_PROJECT_ID);
+console.log('✅ Loaded FIREBASE_CLIENT_EMAIL:', !!process.env.FIREBASE_CLIENT_EMAIL);
+console.log('✅ Loaded FIREBASE_PRIVATE_KEY:', !!process.env.FIREBASE_PRIVATE_KEY?.slice(0, 20) + '...');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
