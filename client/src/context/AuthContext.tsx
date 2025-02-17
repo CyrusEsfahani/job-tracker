@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { User, onAuthStateChanged } from 'firebase/auth';
+import { User, onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../firebase/config';
 
 type AuthContextType = {
@@ -27,7 +27,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const logout = async () => {
-    await auth.signOut();
+    await signOut(auth);
+    setUser(null); // ✅ Ensure `user` state is reset
   };
 
   return (
